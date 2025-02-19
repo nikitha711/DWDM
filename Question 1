@@ -1,0 +1,20 @@
+age_intervals <- c("1-5", "5-15", "15-20", "20-50", "50-80", "80-110")
+frequencies <- c(200, 450, 300, 1500, 700, 44)
+
+# Compute cumulative frequencies
+cum_frequencies <- cumsum(frequencies)
+N <- sum(frequencies)
+N_by_2 <- N / 2
+
+# Identify the median class (where cumulative frequency just exceeds N/2)
+median_class_index <- which(cum_frequencies >= N_by_2)[1]
+L <- c(1, 5, 15, 20, 50, 80)[median_class_index] # Lower boundary of median class
+F <- ifelse(median_class_index > 1, cum_frequencies[median_class_index - 1], 0)
+f <- frequencies[median_class_index]
+h <- c(4, 10, 5, 30, 30, 30)[median_class_index] # Class width
+
+# Compute the median
+median_value <- L + ((N_by_2 - F) / f) * h
+
+# Print the median
+print(median_value)
